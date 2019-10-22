@@ -16,19 +16,19 @@ namespace NBAWebApi.Acl
     public class LeagueFormat
     {
         [DataMember(Name = "standard")]
-        public List<Player> Standard { get; set; }
+        public List<ExternalPlayer> Standard { get; set; }
         
         [DataMember(Name = "africa")]
-        public List<Player> Africa { get; set; }
+        public List<ExternalPlayer> Africa { get; set; }
         
         [DataMember(Name = "sacramento")]
-        public List<Player> Sacramento { get; set; }
+        public List<ExternalPlayer> Sacramento { get; set; }
         
         [DataMember(Name = "vegas")]
-        public List<Player> Vegas { get; set; }
+        public List<ExternalPlayer> Vegas { get; set; }
         
         [DataMember(Name = "utah")]
-        public List<Player> Utah { get; set; }
+        public List<ExternalPlayer> Utah { get; set; }
     }
 }
 

@@ -1,68 +1,82 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace NBAWebApi.Models
 {
+    [Table("Player")]
     [Serializable]
     public class Player
     {
         /// <summary>
         /// The id of the player based on nba database
         /// </summary>
-        [DataMember(Name = "personId")]
-        public string PersonId { get; set; }
+        [Key]
+        [Column]
+        [DataMember(Name = "Id")]
+        public int Id { get; set; }
         
         /// <summary>
         /// The first name of the player
         /// </summary>
+        [Column]
         [DataMember(Name = "firstName")]
         public string FirstName { get; set; }
         
         /// <summary>
         /// The last name of the player
         /// </summary>
+        [Column]
         [DataMember(Name = "lastName")]
         public string LastName { get; set; }
         
         /// <summary>
         /// The height in feet
         /// </summary>
+        [Column]
         [DataMember(Name = "heightFeet")]
-        public string HeightFeet { get; set; }
+        public int HeightFeet { get; set; }
         
         /// <summary>
         /// The height in inches
         /// </summary>
+        [Column]
         [DataMember(Name = "heightInches")]
-        public string HeightInches { get; set; }
+        public int HeightInches { get; set; }
         
         /// <summary>
         /// The id of current team on bna database
         /// </summary>
+        [Column]
         [DataMember(Name = "teamId")]
-        public string TeamId { get; set; }
+        public int TeamId { get; set; }
         
         /// <summary>
         /// The name of the current team
         /// </summary>
+        [Column]
         [DataMember(Name = "teamName")]
         public string TeamName { get; set; }
         
         /// <summary>
         /// The date of birth in UTC standard time
         /// </summary>
+        [Column("DateOfBirth")]
         [DataMember(Name = "dateOfBirthUTC")]
-        public string DateOfBirthUTC { get; set; }
+        public DateTime DateOfBirthUTC { get; set; }
         
         /// <summary>
         /// The player weight in pounds
         /// </summary>
+        [Column]
         [DataMember(Name = "weightPounds")]
-        public string WeightPounds { get; set; }
+        public int WeightPounds { get; set; }
         
         /// <summary>
         /// The country of origin
         /// </summary>
+        [Column]
         [DataMember(Name = "country")]
         public string Country { get; set; }
 
@@ -83,16 +97,10 @@ namespace NBAWebApi.Models
         
         private int CalculateAge()
         {
-            if (string.IsNullOrWhiteSpace(this.DateOfBirthUTC))
-            {
-                return 0;
-            }
-            
             var now = DateTime.UtcNow;
-            var dob = Convert.ToDateTime(DateOfBirthUTC);
-            var age = now.Year - dob.Year;
+            var age = now.Year - this.DateOfBirthUTC.Year;
 
-            if (now.Month < dob.Month || (now.Month == dob.Month && now.Day < dob.Day))
+            if (now.Month < this.DateOfBirthUTC.Month || (now.Month == this.DateOfBirthUTC.Month && now.Day < this.DateOfBirthUTC.Day))
                 age--;
 
             return age;
