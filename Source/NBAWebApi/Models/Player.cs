@@ -81,6 +81,13 @@ namespace NBAWebApi.Models
         public string Country { get; set; }
 
         /// <summary>
+        /// Season played
+        /// </summary>
+        [Column]
+        [DataMember(Name = "season")]
+        public int Season { get; set; }
+
+        /// <summary>
         /// The string representation of a players height in feet and inches
         /// </summary>
         public string HeightLabel => $"{this.HeightFeet}'{this.HeightInches}\"";

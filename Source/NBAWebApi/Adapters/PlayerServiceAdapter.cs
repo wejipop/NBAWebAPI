@@ -17,8 +17,9 @@ namespace NBAWebApi.Adapters
     
     public class PlayerServiceAdapter : IPlayerServiceAdapter
     {
+        private static readonly int currentSeason = DateTime.Now.Year;
         private readonly IHttpClientFactory clientFactory;
-        private static readonly string RequestUrl = $"http://data.nba.net/prod/v1/{DateTime.Now.Year}/players.json";
+        private static readonly string RequestUrl = $"http://data.nba.net/prod/v1/{currentSeason}/players.json";
 
         public PlayerServiceAdapter(IHttpClientFactory clientFactory)
         {
@@ -45,7 +46,7 @@ namespace NBAWebApi.Adapters
         private async Task<List<Player>> ReadAsJsonAsync(HttpContent content)
         {
             var jsonString = await content.ReadAsStringAsync();
-            var value = JsonConvert.DeserializeObject<NBAPlayerResultFormat>(jsonString);
+            var value = JsonConvert.DeserializeObject<NBAResultFormat<ExternalPlayer>>(jsonString);
             return this.MapToInternalModel(value.League.Standard);
         }
 
@@ -59,7 +60,7 @@ namespace NBAWebApi.Adapters
                 int.TryParse(ep.HeightInches, out var heightInches);
                 int.TryParse(ep.WeightPounds, out var weightPounds);
                 DateTime.TryParse(ep.DateOfBirthUTC, out var dob);
-                
+
                 return new Player
                 {
                     Id = id,
@@ -70,7 +71,8 @@ namespace NBAWebApi.Adapters
                     TeamId = teamId,
                     WeightPounds = weightPounds,
                     Country = ep.Country,
-                    DateOfBirthUTC = dob
+                    DateOfBirthUTC = dob,
+                    Season = currentSeason
                 };
             }
             ).ToList();

@@ -10,5 +10,6 @@ create table Player (
 	DateOfBirth DateTime,
 	WeightPounds int,
 	Country varchar(255),
+	Season int,
 	constraint primary_key_PersonId primary key (Id)
 );

@@ -27,7 +27,8 @@ namespace NBAWebApi
             services.AddMvc();
             services.AddHttpClient();
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(config.GetConnectionString("NbaLocalDBConnection")));
-            
+
+            services.AddScoped<ITeamServiceAdapter, TeamServiceAdapter>();
             services.AddScoped<IPlayerService, PlayerService>();
             services.AddScoped<IPlayerServiceAdapter, PlayerServiceAdapter>();
             services.AddScoped<IPlayerRepository, SqlPlayerRepository>();

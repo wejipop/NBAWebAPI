@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NBAWebApi.Adapters;
 using NBAWebApi.Application;
 using NBAWebApi.Models;
 
@@ -12,11 +13,15 @@ namespace NBAWebApi.Controllers
     public class PlayerController : Controller
     {
         private readonly IPlayerService playerService;
-        
-        public PlayerController(IPlayerService playerService)
+        private readonly ITeamServiceAdapter teamService;
+
+
+        public PlayerController(IPlayerService playerService, ITeamServiceAdapter teamService)
         {
             this.playerService = playerService;
+            this.teamService = teamService;
         }
+
         
         [HttpGet]
         [Route("")]
@@ -38,6 +43,14 @@ namespace NBAWebApi.Controllers
             }
 
             return "Yay";
+        }
+
+        [HttpGet]
+        [Route("teams")]
+        public async Task<IEnumerable<Team>> GetTeams()
+        {
+            var team = await this.teamService.GetAllTeams();
+            return team;
         }
     }
 }
