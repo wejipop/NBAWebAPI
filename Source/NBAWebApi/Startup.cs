@@ -32,6 +32,8 @@ namespace NBAWebApi
             services.AddScoped<IPlayerService, PlayerService>();
             services.AddScoped<IPlayerServiceAdapter, PlayerServiceAdapter>();
             services.AddScoped<IPlayerRepository, SqlPlayerRepository>();
+            services.AddScoped<ITeamRepository, SqlTeamRepository>();
+            services.AddScoped<ITeamService, TeamService>();
         } 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

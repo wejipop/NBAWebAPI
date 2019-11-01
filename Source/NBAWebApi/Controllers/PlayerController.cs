@@ -6,6 +6,7 @@ using NBAWebApi.Application;
 using NBAWebApi.Models;
 
 
+
 namespace NBAWebApi.Controllers
 {
     [Route("v1/player")]
@@ -13,13 +14,12 @@ namespace NBAWebApi.Controllers
     public class PlayerController : Controller
     {
         private readonly IPlayerService playerService;
-        private readonly ITeamServiceAdapter teamService;
+        private readonly ITeamService TeamService;
 
-
-        public PlayerController(IPlayerService playerService, ITeamServiceAdapter teamService)
+        public PlayerController(IPlayerService playerService, ITeamService teamService)
         {
             this.playerService = playerService;
-            this.teamService = teamService;
+            TeamService = teamService;
         }
 
         
@@ -47,9 +47,9 @@ namespace NBAWebApi.Controllers
 
         [HttpGet]
         [Route("teams")]
-        public async Task<IEnumerable<Team>> GetTeams()
+        public async Task<bool> GetTeams()
         {
-            var team = await this.teamService.GetAllTeams();
+            var team = await this.TeamService.LoadTeams();
             return team;
         }
     }
