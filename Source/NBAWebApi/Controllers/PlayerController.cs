@@ -14,14 +14,11 @@ namespace NBAWebApi.Controllers
     public class PlayerController : Controller
     {
         private readonly IPlayerService playerService;
-        private readonly ITeamService TeamService;
 
-        public PlayerController(IPlayerService playerService, ITeamService teamService)
+        public PlayerController(IPlayerService playerService)
         {
             this.playerService = playerService;
-            TeamService = teamService;
         }
-
         
         [HttpGet]
         [Route("")]
@@ -43,14 +40,6 @@ namespace NBAWebApi.Controllers
             }
 
             return "Yay";
-        }
-
-        [HttpGet]
-        [Route("teams")]
-        public async Task<bool> GetTeams()
-        {
-            var team = await this.TeamService.LoadTeams();
-            return team;
         }
     }
 }

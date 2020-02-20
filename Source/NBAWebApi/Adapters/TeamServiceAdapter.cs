@@ -17,7 +17,7 @@ namespace NBAWebApi.Adapters
 
     public class TeamServiceAdapter : ITeamServiceAdapter
     {
-        private static readonly int currentSeason = DateTime.Now.Year;
+        private static readonly int currentSeason = 2019;
         private readonly IHttpClientFactory clientFactory;
         private static readonly string RequestUrl = $"http://data.nba.net/prod/v2/{currentSeason}/teams.json";
 
