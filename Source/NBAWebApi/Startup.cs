@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using NBAWebApi.Adapters;
 using NBAWebApi.Application;
 using NBAWebApi.DataAccess;
 using NBAWebApi.DataAccess.SqlRepositories;
 using NBAWebApi.Models;
+using System.IO;
 
 namespace NBAWebApi
 {
@@ -50,6 +52,15 @@ namespace NBAWebApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
+            var webrootPath = Path.Combine(env.ContentRootPath, "wwwroot");
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(webrootPath),
+                RequestPath = ""
+            });
         }
     }
 }
